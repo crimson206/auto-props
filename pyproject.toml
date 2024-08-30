@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fhiis-annotation-generator"
+name = "crimson-auto-props"
 version = "0.1.0"
 description = "Your package description."
 readme = "README.md"
@@ -32,14 +32,10 @@ classifiers = [
 dependencies = [
     "crimson-intelli-type==0.4.0",
     
-    "torch",
-    
-    "torchvision",
-    
-    "torchaudio",
+    "crimson-templator",
 ]
 requires-python = ">=3.9"
 
 [project.urls]
-"Homepage" = "https://github.com/crimson206/annotation-generator"
-"Bug Tracker" = "https://github.com/crimson206/annotation-generator/issues"
+"Homepage" = "https://github.com/crimson206/auto-props"
+"Bug Tracker" = "https://github.com/crimson206/auto-props/issues"
