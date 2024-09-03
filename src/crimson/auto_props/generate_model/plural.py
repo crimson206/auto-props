@@ -1,59 +1,7 @@
-from typing import List, Dict, Optional
-from crimson.templator import format_insert, format_indent
+from typing import List, Dict
+from .base import generate_property, generate_setter, Property
+from crimson.templator import format_indent, format_insert
 import os
-
-
-from typing import TypedDict, Any
-
-
-class Property(TypedDict, total=False):
-    """
-    description
-    """
-
-    name: str
-    type: str
-    default: Any
-    description: str
-
-
-def type_to_str(obj: Optional[type]):
-    if isinstance(obj, type):
-        return obj.__name__
-    return obj
-
-
-def generate_property(property: Property) -> str:
-    property_t = r'''
-@property
-def \[name\](self) -> \[type\]:
-    """
-    \{description\}
-    """
-    return self._\[name\]
-'''
-    kwargs = property.copy()
-    kwargs["type"] = type_to_str(kwargs["type"])
-
-    property_t = format_insert(property_t, **kwargs)
-
-    property_f = format_indent(property_t, **kwargs)
-
-    return property_f
-
-
-def generate_setter(property: Dict) -> str:
-    property_t = r"""
-@\[name\].setter
-def \[name\](self, value: \[type\]):
-    self._\[name\] = value
-"""
-    kwargs = property.copy()
-    kwargs["type"] = type_to_str(kwargs["type"])
-
-    property_f = format_insert(property_t, **kwargs)
-
-    return property_f
 
 
 def generate_properties(properties: List[Dict]) -> str:
@@ -74,7 +22,7 @@ def generate_setters(properties: List[Dict]) -> str:
     return setters
 
 
-def generate_fields(properties: List[Dict]) -> str:
+def generate_fields(properties: List[Property]) -> str:
     """
     Generates field definitions for a class.
 
@@ -100,7 +48,7 @@ def generate_fields(properties: List[Dict]) -> str:
     return fields_str
 
 
-def generate_model(cls_name, properties: List[Dict]) -> str:
+def generate_model(cls_name, properties: List[Property]) -> str:
     args_model_t = r"""
 class \[cls_name\]:
     def __init__(self):

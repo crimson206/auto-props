@@ -150,6 +150,8 @@ options = Options(
 dependencies = [
     "crimson-intelli-type==0.4.0",
     "crimson-templator",
+    "pyyaml",
+    "nbval"
 ]
 
 # Define the general information of your package
